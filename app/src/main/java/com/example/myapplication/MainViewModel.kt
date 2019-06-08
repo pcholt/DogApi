@@ -4,15 +4,22 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.*
 
-class MainViewModel(private val random : TheCatApi) : ViewModel() {
-    val cat = MutableLiveData<CatApiCat>()
+class MainViewModel(private val animalSearchManager : AnimalSearchManager) : ViewModel() {
+    val animal = MutableLiveData<String>()
+    val error = MutableLiveData<String>()
 
     private val job = SupervisorJob()
     private val mainScope = CoroutineScope(Dispatchers.Main + job)
 
-    fun fetch2() {
+    fun fetch() {
         mainScope.launch {
-            cat.value = random.search().firstOrNull()
+            try {
+                animal.value = animalSearchManager.search()
+            }
+            catch (t : Throwable) {
+                animal.value = null
+                error.value = t.message
+            }
         }
     }
 
@@ -20,4 +27,8 @@ class MainViewModel(private val random : TheCatApi) : ViewModel() {
         super.onCleared()
         job.cancel()
     }
+}
+
+interface AnimalSearchManager {
+    suspend fun search() : String?
 }

@@ -9,4 +9,6 @@ interface RandomCat {
 
 data class Cat(
         val file: String
-)
+) : AnimalImageProvider {
+    override val imageUrl get() = file
+}

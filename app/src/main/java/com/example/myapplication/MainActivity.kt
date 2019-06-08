@@ -4,13 +4,9 @@ import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
 import android.widget.Toast
-import android.widget.Toast.LENGTH_SHORT
-import android.widget.Toolbar
+import android.widget.Toast.LENGTH_LONG
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_main.*
@@ -25,14 +21,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-        vm.cat.observe(this, Observer {
+        vm.animal.observe(this, Observer {
             Glide.with(this)
-                    .load(it.url)
+                    .load(it)
                     .into(imageView)
                     .onLoadFailed(resources.getDrawable21(R.drawable.ic_error_black_24dp))
         })
+        vm.error.observe(this, Observer {
+            Toast.makeText(this, it, LENGTH_LONG).show()
+        })
         fab.setOnClickListener {
-            vm.fetch2()
+            vm.fetch()
         }
     }
 

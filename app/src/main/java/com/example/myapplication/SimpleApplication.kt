@@ -15,35 +15,34 @@ class SimpleApplication : Application() {
         super.onCreate()
         startKoin {
             androidContext(this@SimpleApplication)
-            modules(listOf(viewmodelModule, networkModule))
+            modules(listOf(viewmodelModule, dogNetworkEndpoint))
         }
     }
 }
 
-val networkModule = module {
-    single(named("dogs")) {
-        Retrofit.Builder()
-                .baseUrl("https://random.dog/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-    }
-    single(named("cats")) {
-        Retrofit.Builder()
-                .baseUrl("https://aws.random.cat/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-    }
-    single(named("thecatapi")) {
-        Retrofit.Builder()
-                .baseUrl("https://api.thecatapi.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-    }
-    single {
-        get<Retrofit>(named("dogs")).create(RandomDog::class.java)
-        get<Retrofit>(named("cats")).create(RandomCat::class.java)
-        get<Retrofit>(named("thecatapi")).create(TheCatApi::class.java)
-    }
+val dogNetworkEndpoint = module {
+    single { retrofit("https://random.dog/") }
+    single { get<Retrofit>().create(RandomDog::class.java) }
+    single<AnimalSearchManager> { RandomDogSearchManager(get())}
+}
+
+val catNetworkEndpoint1 = module {
+    single(named("cats")) { retrofit("https://aws.random.cat/") }
+    single { get<Retrofit>(named("cats")).create(RandomCat::class.java) }
+    single<AnimalSearchManager> { RandomCatSearchManager(get())}
+}
+
+val catNetworkEndpoint2 = module {
+    single(named("thecatapi")) { retrofit("https://api.thecatapi.com/") }
+    single { get<Retrofit>(named("thecatapi")).create(TheCatApi::class.java)}
+    single<AnimalSearchManager> { CatApiSearchManager(get())}
+}
+
+private fun retrofit(baseUrl: String): Retrofit {
+    return Retrofit.Builder()
+            .baseUrl(baseUrl)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
 }
 
 val viewmodelModule = module {
