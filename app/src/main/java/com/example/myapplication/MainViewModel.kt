@@ -2,19 +2,17 @@ package com.example.myapplication
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.myapplication.net.Dog
-import com.example.myapplication.net.RandomDog
 import kotlinx.coroutines.*
 
-class MainViewModel(val random : RandomDog) : ViewModel() {
-    val dog = MutableLiveData<Dog>()
+class MainViewModel(private val random : TheCatApi) : ViewModel() {
+    val cat = MutableLiveData<CatApiCat>()
 
-    val job = SupervisorJob()
-    val mainScope = CoroutineScope(Dispatchers.Main+ job)
+    private val job = SupervisorJob()
+    private val mainScope = CoroutineScope(Dispatchers.Main + job)
 
     fun fetch2() {
         mainScope.launch {
-            dog.value = random.randomDog()
+            cat.value = random.search().firstOrNull()
         }
     }
 

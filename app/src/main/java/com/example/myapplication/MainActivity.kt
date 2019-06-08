@@ -1,5 +1,8 @@
 package com.example.myapplication
 
+import android.content.res.Resources
+import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
@@ -22,31 +25,24 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-        vm.dog.observe(this, Observer {
-            Glide.with(this).load(it.url).into(imageView)
+        vm.cat.observe(this, Observer {
+            Glide.with(this)
+                    .load(it.url)
+                    .into(imageView)
+                    .onLoadFailed(resources.getDrawable21(R.drawable.ic_error_black_24dp))
         })
         fab.setOnClickListener {
             vm.fetch2()
         }
     }
 
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        val id = item.itemId
-
-
-        return if (id == R.id.action_settings) {
-            true
-        } else super.onOptionsItemSelected(item)
-
-    }
 }
+
+private fun Resources.getDrawable21(i: Int): Drawable? =
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        getDrawable(i, null)
+    }
+    else {
+        getDrawable(i)
+    }
+
