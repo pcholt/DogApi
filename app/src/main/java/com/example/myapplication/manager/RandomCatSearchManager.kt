@@ -1,6 +1,7 @@
-package com.example.myapplication
+package com.example.myapplication.manager
 
-import retrofit2.Retrofit
+import com.example.myapplication.AnimalSearchManager
+import com.example.myapplication.net.RandomCat
 
 class RandomCatSearchManager(val randomCat: RandomCat) : AnimalSearchManager {
     override suspend fun search() =

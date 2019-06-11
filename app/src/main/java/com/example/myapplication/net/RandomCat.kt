@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.myapplication.net
 
 import retrofit2.http.GET
 
@@ -9,6 +9,4 @@ interface RandomCat {
 
 data class Cat(
         val file: String
-) : AnimalImageProvider {
-    override val imageUrl get() = file
-}
+)

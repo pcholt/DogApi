@@ -3,6 +3,7 @@ package com.example.myapplication
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.*
+import java.lang.Exception
 
 class MainViewModel(private val animalSearchManager : AnimalSearchManager) : ViewModel() {
     val animal = MutableLiveData<String>()
@@ -14,11 +15,10 @@ class MainViewModel(private val animalSearchManager : AnimalSearchManager) : Vie
     fun fetch() {
         mainScope.launch {
             try {
-                animal.value = animalSearchManager.search()
+                animal.postValue(animalSearchManager.search())
             }
             catch (t : Throwable) {
-                animal.value = null
-                error.value = t.message
+                error.postValue(t.message)
             }
         }
     }
@@ -30,5 +30,6 @@ class MainViewModel(private val animalSearchManager : AnimalSearchManager) : Vie
 }
 
 interface AnimalSearchManager {
+    @Throws(Exception::class)
     suspend fun search() : String?
 }

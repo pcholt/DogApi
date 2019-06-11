@@ -1,6 +1,5 @@
 package com.example.myapplication.net
 
-import com.example.myapplication.AnimalImageProvider
 import retrofit2.http.GET
 
 interface RandomDog {
@@ -10,7 +9,4 @@ interface RandomDog {
 
 data class Dog(
         val url: String
-) : AnimalImageProvider {
-    override val imageUrl: String
-        get() = url
-}
+)

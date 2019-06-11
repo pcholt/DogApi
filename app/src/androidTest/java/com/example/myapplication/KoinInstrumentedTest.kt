@@ -1,7 +1,6 @@
 package com.example.myapplication
 
 import android.content.Context
-import androidx.lifecycle.ViewModel
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.core.app.ApplicationProvider
@@ -10,7 +9,6 @@ import org.junit.runner.RunWith
 
 import org.junit.Assert.assertEquals
 import org.koin.android.ext.koin.androidContext
-import org.koin.core.context.loadKoinModules
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.dsl.koinApplication
@@ -33,7 +31,7 @@ class KoinInstrumentedTest {
 
         startKoin {
             androidContext(appContext)
-            modules(listOf(viewmodelModule, catNetworkEndpoint1))
+            modules(listOf(viewModelModule, catNetworkEndpoint1))
         }
 
         koinApplication {

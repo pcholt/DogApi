@@ -7,8 +7,7 @@ interface TheCatApi {
     suspend fun search() : Array<CatApiCat>
 }
 
-data class CatApiCat(val breeds : Array<String>, val id:String, val url:String) : AnimalImageProvider {
-    override val imageUrl get() = url
+data class CatApiCat(val breeds : Array<String>, val id:String, val url:String) {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -29,8 +28,4 @@ data class CatApiCat(val breeds : Array<String>, val id:String, val url:String) 
         result = 31 * result + url.hashCode()
         return result
     }
-}
-
-interface AnimalImageProvider {
-    val imageUrl : String
 }
