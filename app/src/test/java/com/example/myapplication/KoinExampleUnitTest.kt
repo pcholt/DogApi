@@ -61,6 +61,7 @@ class KoinExampleUnitTest : AutoCloseKoinTest() {
             modules(listOf(viewModelModule, module {
                 single {
                     mock<AnimalSearchManager> {
+                        // Return a cat picture
                         onBlocking { search() } doReturn CAT_URL
                     }
                 }
@@ -72,6 +73,7 @@ class KoinExampleUnitTest : AutoCloseKoinTest() {
             viewModel.animal
                     .test()
                     .awaitValue(5, TimeUnit.SECONDS)
+                    // Assert a cat picture comes out of the viewmodel's livedata object
                     .assertValue(CAT_URL)
         }
 

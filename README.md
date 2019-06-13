@@ -6,7 +6,7 @@ This actually lets me try out all sorts of APIs for cat pictures too.
 https://github.com/public-apis/public-apis#animals
 
 ## Modules in Koin
-This is a demonstration application for all the technologies we are going to be using in the later versions of the Bluechain application. The testing framework will make unit tests much faster, because they can be run from the development machine without deploying APK to a simulator. The tests in this project run in less than two seconds.
+This is a demonstration application for all the technologies we are going to be using in the later versions of our commercial application. The testing framework will make unit tests much faster, because they can be run from the development machine without deploying APK to a simulator. The tests in this project run in less than two seconds.
 
 ## Android Architecture Components
 The viewmodel in the project is subject to two unit tests:
